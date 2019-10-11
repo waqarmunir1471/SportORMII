@@ -38,5 +38,11 @@ namespace SportsORM.Controllers
             return View();
         }
 
+        [HttpGet("level_3")]
+        public IActionResult Level3()
+        {
+            return View();
+        }
+
     }
 }
