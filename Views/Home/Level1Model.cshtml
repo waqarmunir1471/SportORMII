@@ -1,0 +1,358 @@
+@{
+    ViewData["Title"] = "Level 1";
+}
+@* @model List<League> *@
+@model Context
+<div class="jumbotron">
+    <p>Using the SportsORM, complete all the following queries and show their results on Level1.cshtml.</p>
+    <h1>Level1 with ViewBag</h1>
+    <ol>
+        <li>...all womens' leagues</li> 
+        <li>...all leagues where sport is any type of hockey</li>
+        <li>...all leagues where sport is something OTHER THAN football</li>
+        <li>...all leagues that call themselves "conferences"</li>
+        <li>...all leagues in the Atlantic region</li>
+        <li>...all teams based in Dallas</li>
+        <li>...all teams named the Raptors</li>
+        <li>...all teams whose location includes "City"</li>
+        <li>...all teams whose names begin with "T"</li>
+        <li>...all teams, ordered alphabetically by location</li>
+        <li>...all teams, ordered by team name in reverse alphabetical order</li>
+        <li>...every player with last name "Cooper"</li>
+        <li>...every player with first name "Joshua"</li>
+        <li>...every player with last name "Cooper" EXCEPT those with "Joshua" as the first name</li>
+        <li>...all players with first name "Alexander" OR first name "Wyatt"</li>
+    </ol>
+</div>
+        <div class="col-lg-5">
+            <h1>All Women's League</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sport</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Teams</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model.Leagues.Where(l => l.Name.Contains("Women")).ToList())
+                    {
+                        <tr>
+                            <td>@a.Name</td>
+                            <td>@a.Sport</td>
+                            <td>@a.CreatedAt</td>
+                            <td>@a.UpdatedAt</td>
+                            <td>Team</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All Hocky Dockies</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sport</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Teams</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var b in Model.Leagues.Where(z => z.Sport.Contains("Hockey")).ToList())
+                    {
+                        <tr>
+                            <td>@b.Name</td>
+                            <td>@b.Sport</td>
+                            <td>@b.CreatedAt</td>
+                            <td>@b.UpdatedAt</td>
+                            <td>Team</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div> 
+        <div class="col-lg-5">
+            <h1>No Football</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Sport</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Teams</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Leagues.Where(z=>z.Sport != "Football").ToList())
+                {
+                    <tr>
+                        <td>@c.Name</td>
+                        <td>@c.Sport</td>
+                        <td>@c.CreatedAt</td>
+                        <td>@c.UpdatedAt</td>
+                        <td>Team</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        
+        <div class="col-lg-5">
+            <h1>League With Conferences</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Sport</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Teams</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in  Model.Leagues.Where(z=>z.Name.Contains("Conference")).ToList())
+                {
+                    <tr>
+                        <td>@d.Name</td>
+                        <td>@d.Sport</td>
+                        <td>@d.CreatedAt</td>
+                        <td>@d.UpdatedAt</td>
+                        <td>Team</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        
+        <div class="col-lg-5">
+            <h1>All Atlantic Leagues</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Sport</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Teams</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in Model.Leagues.Where(z=>z.Name.Contains("Atlantic")).ToList())
+                {
+                    <tr>
+                        <td>@e.Name</td>
+                        <td>@e.Sport</td>
+                        <td>@e.CreatedAt</td>
+                        <td>@e.UpdatedAt</td>
+                        <td>Team</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>Dallas Teams</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var f in Model.Teams.Where(z=>z.Location.Contains("Dallas")).ToList())
+                {
+                    <tr>
+                        <td>@f.Location</td>
+                        <td>@f.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All Raptors</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var g in Model.Teams.Where(z=>z.TeamName =="Raptors").ToList())
+                {
+                    <tr>
+                        <td>@g.Location</td>
+                        <td>@g.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>City Teams</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var g in Model.Teams.Where(z=>z.Location.Contains("City")).ToList())
+                {
+                    <tr>
+                        <td>@g.Location</td>
+                        <td>@g.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>T Teams</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var h in Model.Teams.Where(z=>z.TeamName.StartsWith("T")).ToList())
+                {
+                    <tr>
+                        <td>@h.Location</td>
+                        <td>@h.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>Alpha Order</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var h in Model.Teams.OrderBy(z=>z.Location).ToList())
+                {
+                    <tr>
+                        <td>@h.Location</td>
+                        <td>@h.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>R Alpha Order</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Team Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var h in Model.Teams.OrderByDescending(z=>z.TeamName).ToList())
+                {
+                    <tr>
+                        <td>@h.Location</td>
+                        <td>@h.TeamName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All the Coopers</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Players.Where(z=>z.LastName == "Cooper").ToList())
+                {
+                    <tr>
+                        <td>@c.FirstName</td>
+                        <td>@c.LastName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All the Joshuas </h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Players.Where(z=>z.FirstName == "Joshua").ToList())
+                {
+                    <tr>
+                        <td>@c.FirstName</td>
+                        <td>@c.LastName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>Cooper Kick Out Joshuas</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Players.Where(z=>z.LastName == "Cooper" && z.FirstName != "Joshua").ToList())
+                {
+                    <tr>
+                        <td>@c.FirstName</td>
+                        <td>@c.LastName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>Alexander and Wyatt</h1>
+            <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Players.Where(z=>z.FirstName == "Alexander" || z.FirstName == "Wyatt" ).ToList())
+                {
+                    <tr>
+                        <td>@c.FirstName</td>
+                        <td>@c.LastName</td>
+                    </tr>
+                }
+            </tbody>
+         </table>
+        </div> 
