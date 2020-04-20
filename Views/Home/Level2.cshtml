@@ -1,7 +1,8 @@
 @{
     ViewData["Title"] = "Level 2";
 }
-
+@using Microsoft.EntityFrameworkCore
+@model Context
 <div class="well">
     <p>Using the SportsORM, complete all the following queries and show their results on Level2.cshtml.</p>
     <ol>
@@ -16,3 +17,210 @@
         <li>...all teams that have had 12 or more players</li>
     </ol>
 </div>
+<div class="col-lg-5">
+            <h1>All Teams</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>TeamName</th>
+                        <th>Team Location</th>
+                        <th>Current League</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var team in Model.Leagues.Include(l=>l.Teams).FirstOrDefault(f =>f.Name == "Atlantic Soccer Conference").Teams)
+                    {
+                        <tr>
+                            <td>@team.TeamName</td>
+                            <td>@team.Location</td>
+                            <td>@team.CurrLeague.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All Teams</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Current Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in Model.Teams.Include(l=>l.CurrentPlayers).FirstOrDefault(f=>f.TeamName == "Penguins").CurrentPlayers)
+                    {
+                        <tr>
+                            <td>@player.FirstName</td>
+                            <td>@player.LastName</td>
+                            <td>@player.CurrentTeam.TeamName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-lg-5">
+            <h1>International Collegiate Baseball Conference</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Team Location</th>
+                        <th>League</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.Leagues.Include(l=>l.Teams).FirstOrDefault(f=>f.Name.Contains("International Collegiate Baseball Conference")).Teams)
+                    {
+                        <tr>
+                            <td>@i.TeamName</td>
+                            <td>@i.Location</td>
+                            <td>@i.CurrLeague.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>American Conference of Amateur Football</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Team Location</th>
+                        <th>League</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.Leagues.Include(l=>l.Teams).FirstOrDefault(f=>f.Name.Contains("American Conference of Amateur Football")).Teams)
+                    {
+                        <tr>
+                            <td>@i.TeamName</td>
+                            <td>@i.Location</td>
+                            <td>@i.CurrLeague.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All Football Teams</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sports</th>
+                        <th>Team Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.Leagues.Include(l=>l.Teams).FirstOrDefault( f=> f.Sport.Contains("Football")).Teams)
+                    {
+                        <tr>
+                            <td>@i.CurrLeague.Sport</td>
+                            <td>@i.Location</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All Teams with Player Name "Sophia"</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sports</th>
+                        <th>Current Player Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in Model.Players.Include(f=>f.CurrentTeam).Where(d=>d.FirstName.Contains("Sophia")))
+                    {
+                        <tr>
+                            <td>@player.FirstName</td>
+                            <td>@player.LastName</td>
+                            <td>@player.CurrentTeam.TeamName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>everyone with the last name "Flores" who DOESN'T (currently) play for the Raptors (</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sports</th>
+                        <th>Current Player Name</th>
+                        <th>Teams</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in Model.Players.Include(f=>f.CurrentTeam).Where(d=>d.LastName.Contains("Flores")))
+                    {
+                        if(@player.CurrentTeam.TeamName !="Raptors")
+                        {
+                            <tr>
+                                <td>@player.FirstName</td>
+                                <td>@player.LastName</td>
+                                <td>@player.CurrentTeam.TeamName</td>
+                            </tr>
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>All current players with the Manitoba Tiger-Cats</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Location</th>
+                        <th>Team Name</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in Model.Teams.Include(f=>f.CurrentPlayers).FirstOrDefault(d=>d.Location.Contains("Manitoba")).CurrentPlayers)
+                    {
+                        <tr>
+                            <td>@player.FirstName</td>
+                            <td>@player.LastName</td>
+                            <td>@player.CurrentTeam.Location</td>
+                            <td>@player.CurrentTeam.TeamName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-5">
+            <h1>all teams that have had 12 or more players</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Location</th>
+                        <th>Number of Players</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in Model.Teams.Include(f=>f.AllPlayers).Where(t=>t.AllPlayers.Count>=12).ToList())
+                    {
+                            <tr>
+                                <td>@player.TeamName</td>
+                                <td>@player.Location</td>
+                                <td>@player.AllPlayers.Count</td>
+                             </tr>
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
